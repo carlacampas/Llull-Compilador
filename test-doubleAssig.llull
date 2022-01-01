@@ -1,0 +1,10 @@
+void main () {
+    x = 1
+    write(x)
+
+    x--
+    write(x)
+
+    x++
+    write(x)
+}

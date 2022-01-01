@@ -1,0 +1,5 @@
+void main () {
+    x = "this is a string"
+    x = x + ", and we want to add this string"
+    write(x)
+}

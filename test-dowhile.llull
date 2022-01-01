@@ -1,0 +1,7 @@
+void main () {
+    x = 0
+    do {
+        write(x)
+        x = x + 1
+    } while (x < 5)
+}

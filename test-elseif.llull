@@ -1,0 +1,12 @@
+void main () {
+    x = 5
+    if (x == 2) {
+        write("has entrat en la condicio del if!")
+    }
+    else if (x == 5) {
+        write("has entrat en la condicio del else if!")
+    }
+    else {
+        write("has entrat en l'else!")
+    }
+}
