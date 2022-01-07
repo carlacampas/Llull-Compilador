@@ -1,6 +1,7 @@
 # LLULL COMPILER 
+Compiler for a new programming language **Llull**. This language will have the extension *.llull*.
 
-> Compiler for a new programming language **Llull**. This language will have the extension *.llull*.
+> For more information refer to: https://github.com/jordi-petit/lp-llull-2021
 
 **NOTE** 
 Compilation and execution are in macOS syntax. 
