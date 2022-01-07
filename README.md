@@ -4,7 +4,7 @@ Compiler for a new programming language **Llull**. This language will have the e
 **NOTE** 
 Compilation and execution are in macOS syntax. 
 
-## BEFORE COMPILING 
+## Before Compiling
 Make sure to install requirements: python -m pip install -r requirements.txt 
 
 ## Compiling
@@ -13,10 +13,10 @@ antlr4 -Dlanguage=Python3 -no-listener -visitor llull.g4
 ## Executing Interpret
 Using test file test-exemple.llull
 
-# With main 
+### With main 
 python3 llull.py test-exemple.llull
                  
-# Without main
+### Without main
 python3 llull.py test-exemple-pretty.llull hanoi 3 1 2 3
 
 ## Executing Pretty Printer
