@@ -26,13 +26,13 @@ funcs = {
 def exists_func(f):
     x = (f == "+") or (f == "-") or (f == "*") or (f == "/") or (f == "^")
     x = (
-        x
-        or (f == "==")
-        or (f == "<>")
-        or (f == "<")
-        or (f == ">")
-        or (f == "<=")
-        or (f == ">=")
+        x or
+        (f == "==") or
+        (f == "<>") or
+        (f == "<") or
+        (f == ">") or
+        (f == "<=") or
+        (f == ">=")
     )
     x = x or (f == "&&") or (f == "||")
     return x
@@ -58,8 +58,8 @@ class EvalVisitor(llullVisitor):
         while i < len(l):
             if l[i].getText() != "<EOF>":
                 if (
-                    not (hasattr(l[i], "getRuleIndex"))
-                    or llullParser.ruleNames[l[i].getRuleIndex()] != "accio"
+                    not (hasattr(l[i], "getRuleIndex")) or
+                    llullParser.ruleNames[l[i].getRuleIndex()] != "accio"
                 ):
                     raise Exception("Code should be organized in actions")
             self.visit(l[i])
@@ -83,8 +83,8 @@ class EvalVisitor(llullVisitor):
     def visitExpr(self, ctx):
         l = list(ctx.getChildren())
         if len(l) == 1:
-            if is_float(l[0].getText()) == True:
-                return float(l[0].getText())  # figure out how to implement floats
+            if is_float(l[0].getText()):
+                return float(l[0].getText())
             elif l[0].getText().isnumeric():
                 return int(l[0].getText())
             elif '"' in l[0].getText():
@@ -107,7 +107,7 @@ class EvalVisitor(llullVisitor):
         else:  # len(l) == 3
             if l[0].getText() == "(":
                 return self.visit(l[1])
-            if exists_func(l[1].getText()) == False:
+            if not exists_func(l[1].getText()):
                 raise Exception("Operador no definit")
 
             a = self.visit(l[0])
@@ -119,12 +119,12 @@ class EvalVisitor(llullVisitor):
                 raise Exception("Divisió per zero")
 
             x = funcs[l[1].getText()](a, b)
-            if x == True:
-                return 1
-            elif x == False:
+            if isinstance(x, bool):
+                if x:
+                    return 1
                 return 0
-            else:
-                return x
+
+            return x
 
     def visitAssig(self, ctx):
         l = list(ctx.getChildren())
@@ -132,9 +132,12 @@ class EvalVisitor(llullVisitor):
 
     def visitAssig_operator(self, ctx):
         l = list(ctx.getChildren())
-        a = self.names[self.currentFunc][l[0].getText()]
+        l0 = l[0].getText()
+        l1 = l[1].getText()
+
+        a = self.names[self.currentFunc][l0]
         b = self.visit(l[3])
-        self.names[self.currentFunc][l[0].getText()] = funcs[l[1].getText()](a, b)
+        self.names[self.currentFunc][l0] = funcs[l1](a, b)
 
     def visitAssig_double(self, ctx):
         l = list(ctx.getChildren())
@@ -183,11 +186,11 @@ class EvalVisitor(llullVisitor):
                 i += 2
 
             while (
-                i < len(l)
-                and hasattr(l[i], "getRuleIndex")
-                and (
-                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr"
-                    or llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
+                i < len(l) and
+                hasattr(l[i], "getRuleIndex") and
+                (
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr" or
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
                 )
             ):
                 if met:
@@ -251,11 +254,11 @@ class EvalVisitor(llullVisitor):
         while True:
             i = 2
             while (
-                i < len(l)
-                and hasattr(l[i], "getRuleIndex")
-                and (
-                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr"
-                    or llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
+                i < len(l) and
+                hasattr(l[i], "getRuleIndex") and
+                (
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr" or
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
                 )
             ):
                 self.visit(l[i])
@@ -271,9 +274,9 @@ class EvalVisitor(llullVisitor):
 
         i = 3
         while (
-            i < len(l)
-            and hasattr(l[i], "getRuleIndex")
-            and llullParser.ruleNames[l[i].getRuleIndex()] == "ids"
+            i < len(l) and
+            hasattr(l[i], "getRuleIndex") and
+            llullParser.ruleNames[l[i].getRuleIndex()] == "ids"
         ):
             for x in info["params"]:
                 if x == l[i].getText():
@@ -288,9 +291,9 @@ class EvalVisitor(llullVisitor):
             i += 1
 
         while (
-            i < len(l)
-            and hasattr(l[i], "getRuleIndex")
-            and llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
+            i < len(l) and
+            hasattr(l[i], "getRuleIndex") and
+            llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
         ):
             info["body"].append(l[i])
             i += 1
@@ -305,7 +308,9 @@ class EvalVisitor(llullVisitor):
         while i < len(l) and hasattr(l[i], "getRuleIndex"):
             if llullParser.ruleNames[l[i].getRuleIndex()] == "ids":
                 if l[i].getText() in self.names[self.currentFunc]:
-                    info["params"].append(self.names[self.currentFunc][l[i].getText()])
+                    info["params"].append(
+                        self.names[self.currentFunc][l[i].getText()]
+                    )
                 else:
                     if l[i].getText() in self.names["general"]:
                         info["params"].append(l[i].getText())
