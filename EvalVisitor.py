@@ -81,6 +81,9 @@ class EvalVisitor(llullVisitor):
                 if 'get' in l[0].getText():
                     return self.visit(l[0])
                 
+                if not (l[0].getText() in self.names[self.currentFunc]):
+                    raise Exception ("Variable no definida " + l[0].getText())
+
                 x = self.names[self.currentFunc][l[0].getText()]
                 if x in self.names['general']:
                     return self.names['general'][x]
@@ -93,12 +96,15 @@ class EvalVisitor(llullVisitor):
             if l[0].getText() == '(':
                 return self.visit(l[1])
             if exists_func (l[1].getText()) == False:
-                raise Exception ('Illegal operator')
+                raise Exception ('Operador no definit')
             
             a = self.visit(l[0])
             b = self.visit(l[2])
+            if not (isinstance(a, type(b))):
+                raise Exception ("Variables no son del mateix tipus")
+
             if l[1].getText() == '/' and b == 0:
-                raise Exception ('Division by 0')
+                raise Exception ('Divisió per zero')
             
             x = funcs[l[1].getText()] (a,b)
             if x == True: return 1
@@ -123,7 +129,7 @@ class EvalVisitor(llullVisitor):
         elif l[1].getText() == '--':
             self.names[self.currentFunc][l[0].getText()] = a - 1
         else:
-            raise Exception ('Illegal Operator')
+            raise Exception ('Operador Ilegal')
         
     def visitWrite (self, ctx):
         l = list(ctx.getChildren())
@@ -174,17 +180,27 @@ class EvalVisitor(llullVisitor):
     def visitGet_array (self, ctx):
         l = list(ctx.getChildren())
         i = self.visit(l[4])
+
+        if not (l[2].getText() in self.names['general']):
+            raise Exception ("Variable no definida")
+
         x = self.names['general'][self.names[self.currentFunc][l[2].getText()]]
+
         if i > len(x):
-            raise Exception ('Null Pointer Exception')
+            raise Exception ("Accés a un índex inesxistent d'una taula")
         return x[i]
     
     def visitSet_array (self, ctx):
         l = list(ctx.getChildren())
         i = self.visit(l[4])
+        if not (l[2].getText() in self.names['general']):
+            raise Exception ("Variable no definida")
+
         x = self.names[self.currentFunc][l[2].getText()]
+
         if i > len(self.names['general'][x]):
-            raise Exception ('Null Pointer Exception')
+            raise Exception ("Accés a un índex inesxistent d'una taula")
+
         self.names['general'][x][i] = self.visit(l[6])
     
     def visitWhile_loop(self, ctx):
@@ -226,6 +242,10 @@ class EvalVisitor(llullVisitor):
 
         i = 3
         while i < len(l) and hasattr(l[i], 'getRuleIndex') and llullParser.ruleNames[l[i].getRuleIndex()] == 'ids':
+            for x in info['params']:
+                if x == l[i].getText(): 
+                    raise Exception ("Nom de parametre repetit")
+
             info['params'].append(l[i].getText())
             i += 2
         
@@ -294,34 +314,35 @@ class Accio:
     def afegirAccio(self, info):
         if not (info['name'] in self.acc.keys()):
             self.acc[info['name']] = list ()
+
         else:
             for action in self.acc[info['name']]:
                 if len(info['params']) == len(action['params']):
-                    str = 'Redeclaration of action ' + action['name']
+                    str = 'Ja existeix funció amb nom ' + action['name']
                     raise Exception(str)
 
         self.acc[info['name']].append(info)
 
     def buscarAccio(self, name, param):
         if not (name in self.acc.keys()):
-            str = 'Function ' + name + ' does not exist'
+            str = 'La funcio amb nom ' + name + ' no existeix'
             raise Exception(str)
 
         for action in self.acc[name]:
             if param == len(action['params']):
                 return action['body']
         
-        str = 'Function ' + name + ' does not exist'
+        str = 'Número de parametres incorrecte per la funció ' + name
         raise Exception(str)
 
     def buscarParms(self, name, params):
         if not (name in self.acc.keys()):
-            str = 'Function ' + name + ' does not exist'
+            str = 'La funcio amb nom ' + name + ' no existeix'
             raise Exception(str)
 
         for action in self.acc[name]:
             if params == len(action['params']):
                 return action['params']
     
-        str = 'Function ' + name + ' does not exist'
+        str = 'Número de parametres incorrecte per la funció ' + name
         raise Exception(str)

@@ -51,7 +51,7 @@ class BeatVisitor(llullVisitor):
 
     def visitWrite (self, ctx):
         l = list(ctx.getChildren())
-        code = l[0].getText() + l[1].getText()
+        code = colored(l[0].getText(), 'cyan') + l[1].getText()
         i = 2
         while i < len(l) and l[i].getText() != ')':
             code += l[i].getText()
