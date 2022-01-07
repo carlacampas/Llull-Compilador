@@ -42,5 +42,5 @@ python3 llull.py test-exemple-pretty.llull
 
 ## Array Manipulation Syntax
 * Creating a new array: *array(<variable_name>, <array_size>)*
-* Getting value for a given index: *get(<variable_name>, <index>)*
-* Setting value for a given index: *set(<variable_name>, <index>, <new_value>)*
+* Getting value for a given index: *get(<variable_name>, <index_val>)*
+* Setting value for a given index: *set(<variable_name>, <index_val>, <new_value>)*
