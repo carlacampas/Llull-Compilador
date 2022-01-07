@@ -13,7 +13,7 @@ def is_float(x):
     return len(xs) == 2 and xs[0].isnumeric() and xs[1].isnumeric()
 
 
-class BeatVisitor(llullVisitor):
+class TreeVisitor(llullVisitor):
     def __init__(self):
         self.spaces = 0
 
