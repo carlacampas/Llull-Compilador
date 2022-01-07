@@ -34,7 +34,7 @@ expr : PARL expr PARR
     ;
 
 if_else: 'if' PARL expr PARR BRACKL stat* BRACKR 
-        ('else if' PARL expr PARR BRACKL stat* BRACKR)?
+        ('else if' PARL expr PARR BRACKL stat* BRACKR)*
         ('else' BRACKL stat* BRACKR)?;
 
 while_loop: 'while' PARL expr PARR BRACKL stat* BRACKR;
@@ -44,7 +44,7 @@ do_while_loop: 'do' BRACKL stat* BRACKR 'while' PARL expr PARR;
 for_loop: 'for' PARL assig ';' expr ';' stat+ PARR BRACKL stat* BRACKR;
 
 assig : ids '=' expr;
-assig_operator : ids (MES | MENYS | MULT | DIV) '=' expr;
+assig_operator : ids (MES | MENYS | MULT | DIV | MOD | AND | OR) '=' expr;
 assig_double : ids ('++'| '--' );
 
 read  : 'read' PARL ids PARR                    ;

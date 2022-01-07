@@ -59,5 +59,26 @@ Coments in code can be placed using the charachter '#'.
 
 ## Input and Output
 read(<variable_name>)
-write(<variable_name>, <value>...): separated by comas
+write(<variable_name>, <value>...): different output values separated by comas
 
+# Extensions Implementades
+Extensions that have been implemented to extend the Llull Programming Language and its usability.
+
+## Do While
+Do while loops changes the order of execution of the loop. The first iteration of the loops' body is always executed and in posteriority the condition is checked.
+
+## Additional Operators
+* '&&': and operator checks that conditions before and after the sign are equal to 1
+* '||': or operator checks that either the conditions before or after the sign is equal to 1
+
+## Assignations Using Operators
+Two diferent types of *new* assignations have been implemented using operators to simplify the users code. Below are examples on these new assignation formats.
+
+Note: the first type can be used for '+', '-', '*', '/', '%', '&&', '||' where as the second type can only be used in the following cases '++' and '--'. Provided the variables are integers.
+
+### Examples: 
+**i = i + 1** => **i += 1** => **i++**
+**i = i - 1** => **i -= 1** => **i--**
+
+## Else if
+Else if provides a similar structure to nested ifs. Using the key word 'else if' allows as many extra conditions as the user wants to be implemented in one if structure following the same format. 

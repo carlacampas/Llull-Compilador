@@ -1,10 +1,13 @@
 void main () {
-    x = 5
+    x = 8
     if (x == 2) {
         write("has entrat en la condicio del if!")
     }
     else if (x == 5) {
-        write("has entrat en la condicio del else if!")
+        write("has entrat en la condicio del primer else if!")
+    }
+    else if (x == 8) {
+        write("has entrat en la condicio del segon else if!")
     }
     else {
         write("has entrat en l'else!")
