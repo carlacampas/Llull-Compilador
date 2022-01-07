@@ -22,7 +22,7 @@ class TreeVisitor(llullVisitor):
         i = 0
         while i < len(l):
             x = self.visit(l[i])
-            if x != None:
+            if x is not None:
                 print(x)
             i += 1
 
@@ -30,8 +30,8 @@ class TreeVisitor(llullVisitor):
         l = list(ctx.getChildren())
         if len(l) == 1:
             if (
-                hasattr(l[0], "getRuleIndex")
-                and llullParser.ruleNames[l[0].getRuleIndex()] == "get_array"
+                hasattr(l[0], "getRuleIndex") and
+                llullParser.ruleNames[l[0].getRuleIndex()] == "get_array"
             ):
                 return str(self.visit(l[0]))
             if is_float(l[0].getText()) or l[0].getText().isnumeric():
@@ -41,7 +41,11 @@ class TreeVisitor(llullVisitor):
         if l[0].getText() == "(":
             return "(" + self.visit(l[1]) + ")"
         return (
-            str(self.visit(l[0])) + " " + l[1].getText() + " " + str(self.visit(l[2]))
+            str(self.visit(l[0])) +
+            " " +
+            l[1].getText() +
+            " " +
+            str(self.visit(l[2]))
         )
 
     def visitAssig(self, ctx):
@@ -101,11 +105,10 @@ class TreeVisitor(llullVisitor):
 
             self.spaces += 1
             while (
-                i < len(l)
-                and hasattr(l[i], "getRuleIndex")
-                and (
-                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr"
-                    or llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
+                i < len(l) and
+                hasattr(l[i], "getRuleIndex") and (
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "expr" or
+                    llullParser.ruleNames[l[i].getRuleIndex()] == "stat"
                 )
             ):
                 retLoop += " " * (self.spaces * 4) + self.visit(l[i]) + "\n"
@@ -165,7 +168,7 @@ class TreeVisitor(llullVisitor):
 
         while i < len(l) and l[i].getText() != "}":
             x = self.visit(l[i])
-            if x != None:
+            if x is not None:
                 ret += " " * (self.spaces * 4) + x + "\n"
             i += 1
 
@@ -181,7 +184,7 @@ class TreeVisitor(llullVisitor):
 
         while i < len(l) and l[i].getText() != "}":
             x = self.visit(l[i])
-            if x != None:
+            if x is not None:
                 ret += " " * (self.spaces * 4) + x + "\n"
             i += 1
         i += 3
@@ -202,10 +205,10 @@ class TreeVisitor(llullVisitor):
         l = list(ctx.getChildren())
         self.spaces += 1
         ret = (
-            colored(l[0].getText(), "red", attrs=["bold"])
-            + " "
-            + colored(l[1].getText(), "magenta", attrs=["bold"])
-            + "("
+            colored(l[0].getText(), "red", attrs=["bold"]) +
+            " " +
+            colored(l[1].getText(), "magenta", attrs=["bold"]) +
+            "("
         )
         i = 3
         while i < len(l) and l[i].getText() != ")":
@@ -217,7 +220,7 @@ class TreeVisitor(llullVisitor):
         ret += ") {\n"
         while i < len(l) and l[i].getText() != "}":
             x = self.visit(l[i])
-            if x != None:
+            if x is not None:
                 ret += " " * (self.spaces * 4) + x + "\n"
             i += 1
 
@@ -231,8 +234,8 @@ class TreeVisitor(llullVisitor):
         ret = colored(l[0].getText(), "cyan")
         while i < len(l):
             if (
-                hasattr(l[i], "getRuleIndex")
-                and llullParser.ruleNames[l[i].getRuleIndex()] == "expr"
+                hasattr(l[i], "getRuleIndex") and
+                llullParser.ruleNames[l[i].getRuleIndex()] == "expr"
             ):
                 ret += self.visit(l[i])
             else:
