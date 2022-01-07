@@ -58,7 +58,7 @@ There are three different types of loops:
 Coments in code can be placed using the charachter '#'.
 
 ## Input and Output
-read(<variable_name>)
+read(<variable_name>)\
 write(<variable_name>, <value>...): different output values separated by comas
 
 # Extensions Implementades
