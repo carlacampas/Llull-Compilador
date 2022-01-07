@@ -33,3 +33,14 @@ python3 llull.py test-exemple-pretty.llull
 * test-exemple2.llull
 * test-operatorAssig.llull
 * test-string.llull
+
+## Available Variable Types
+* Strings
+* Integers
+* Floats
+* Arrays 
+
+## Array Manipulation Syntax
+* Creating a new array: array(<variable_name>, <array_size>)
+* Getting value for a given index(<variable_name>, <index>)
+* Setting value for a given index(<variable_name>, <index>, <new_value>)
