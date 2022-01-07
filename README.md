@@ -36,7 +36,7 @@ python3 llull.py test-exemple-pretty.llull
 
 ## Available Variable Types
 * Strings
-* Integers
+* Integers: *boolean statements will be identified by 0/1*
 * Floats
 * Arrays 
 
@@ -44,3 +44,20 @@ python3 llull.py test-exemple-pretty.llull
 * Creating a new array: *array(<variable_name>, <array_size>)*
 * Getting value for a given index: *get(<variable_name>, <index_val>)*
 * Setting value for a given index: *set(<variable_name>, <index_val>, <new_value>)*
+
+## Conditional Statements
+Conditional statements will be identified by the key words 'if', 'else if' (followed by a condition) and 'else'. The code corresponding to the conditional statement starts with '{' and ends with '}'.
+
+## Loops
+There are three different types of loops:
+* for loops
+* while loops
+* do-while loops
+
+## Comments
+Coments in code can be placed using the charachter '#'.
+
+## Input and Output
+read(<variable_name>)
+write(<variable_name>, <value>...): separated by comas
+
