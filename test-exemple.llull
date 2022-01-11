@@ -1,6 +1,6 @@
 void main() {
-    read(n)
-    hanoi(n, 1, 2, 3)
+    x = 2 + 5
+    write(x)
 }
 
 void hanoi(n, ori, dst, aux) {

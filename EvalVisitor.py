@@ -5,6 +5,7 @@ else:
     from llullParser import llullParser
     from llullVisitor import llullVisitor
 
+# mapa de funcions per operacions aritmetiques i de comparació
 funcs = {
     "+": lambda x, y: x + y,
     "-": lambda x, y: x - y,
@@ -18,11 +19,11 @@ funcs = {
     ">": lambda x, y: x > y,
     "<=": lambda x, y: x <= y,
     ">=": lambda x, y: x >= y,
-    "&&": lambda x, y: (x == 1) and (y == 1),
-    "||": lambda x, y: (x == 1) or (y == 1),
+    "&&": lambda x, y: (x == 1) and (y == 1), # if == 1 --> cert
+    "||": lambda x, y: (x == 1) or (y == 1),  # else    --> false
 }
 
-
+# funcio que defineix si el operador existeix en el mapa de operadors
 def exists_func(f):
     x = (f == "+") or (f == "-") or (f == "*") or (f == "/") or (f == "^")
     x = (
@@ -37,7 +38,7 @@ def exists_func(f):
     x = x or (f == "&&") or (f == "||")
     return x
 
-
+# funcio que comproba que una variable sigui float
 def is_float(x):
     xs = x.split(".")
     return len(xs) == 2 and xs[0].isnumeric() and xs[1].isnumeric()
@@ -348,7 +349,7 @@ class EvalVisitor(llullVisitor):
         self.names.pop(self.currentFunc)
         self.currentFunc = self.stack.pop()
 
-
+# classe utilitzada per guardar les accions i comprobar errors
 class Accio:
     def __init__(self):
         self.acc = {}
